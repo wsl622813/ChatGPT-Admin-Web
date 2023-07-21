@@ -101,20 +101,7 @@ export class UserDAL {
     }
 
     const existUser = await client.user.findMany({
-      where: {
-        OR: [
-          {
-            email: {
-              equals: email,
-            },
-          },
-          {
-            phone: {
-              equals: phone,
-            },
-          },
-        ],
-      },
+      where: { phone: phone }
     });
 
     console.log("existUser.length:", existUser.length);
