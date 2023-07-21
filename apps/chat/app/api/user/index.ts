@@ -27,15 +27,15 @@ export async function apiUserLoginResume(token?: string) {
   ).json()) as ChatResponse.UserLogin;
 }
 
-export async function apiUserLoginPost(email: string, password: string) {
+export async function apiUserLoginPost(phone: string, password: string) {
   return (await (
     await fetch("/api/user/login", {
       cache: "no-store",
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
-        providerId: "email",
-        providerContent: { content: email.trim(), password },
+        providerId: "phone",
+        providerContent: { content: phone.trim(), password },
       }),
     })
   ).json()) as ChatResponse.UserLogin;

@@ -105,7 +105,7 @@ const CaptchaLogin: React.FC = () => {
         value={register}
         className={styles["auth-input"]}
         onChange={(e) => setRegister(e.target.value)}
-        placeholder={`${Locales.User.Phone} / ${Locales.User.Email}`}
+        placeholder={`${Locales.User.Phone} `}
         required
       />
 
@@ -140,7 +140,7 @@ const CaptchaLogin: React.FC = () => {
 
 const PasswdLogin: React.FC = () => {
   const navigate = useNavigate();
-  const [email, setEmail] = useState("");
+  const [phone, setPhone] = useState("");
   const [password, setPassword] = useState("");
   const [isSubmitting, handleSubmit] = usePreventFormSubmit();
   /* Prevent duplicate form submissions */
@@ -149,14 +149,14 @@ const PasswdLogin: React.FC = () => {
   const handleLogin = async (e: FormEvent) => {
     e.preventDefault();
 
-    if (!email || !password)
+    if (!phone || !password)
       return showToast(
         Locales.User.PleaseInput(
-          `${Locales.User.Email}, ${Locales.User.Password}`,
+          `${Locales.User.Phone}, ${Locales.User.Password}`,
         ),
       );
 
-    const res = await apiUserLoginPost(email, password);
+    const res = await apiUserLoginPost(phone, password);
 
     switch (res.status) {
       case serverStatus.success: {
@@ -181,11 +181,11 @@ const PasswdLogin: React.FC = () => {
       <div className={styles["row"]}>
         <input
           type="text"
-          id="email"
-          value={email}
+          id="phone"
+          value={phone}
           className={styles["auth-input"]}
-          onChange={(e) => setEmail(e.target.value)}
-          placeholder={Locales.User.Email}
+          onChange={(e) => setPhone(e.target.value)}
+          placeholder={Locales.User.Phone}
           required
         />
       </div>
@@ -290,7 +290,7 @@ const PhoneReg: React.FC = () => {
         value={register}
         className={styles["auth-input"]}
         onChange={(e) => setRegister(e.target.value)}
-        placeholder={`${Locales.User.Phone} / ${Locales.User.Email}`}
+        placeholder={`${Locales.User.Phone}`}
         required
       />
       
