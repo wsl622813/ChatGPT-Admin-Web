@@ -129,7 +129,7 @@ const CaptchaLogin: React.FC = () => {
       <div className={styles["auth-actions"]}>
         <IconButton
           onClick={() => handleSubmit(undefined, handleLogin)}
-          text={`${Locales.User.Login} / ${Locales.User.Register}`}
+          text={`${Locales.User.Login}`}
           className={styles["auth-submit-btn"]}
           type="primary"
         />
@@ -203,7 +203,7 @@ const PasswdLogin: React.FC = () => {
       </div>
 
       <div className={styles["auth-actions"]}>
-        <IconButton text={Locales.Auth.Confirm} type="primary" />
+        <IconButton text={Locales.User.Login} type="primary" />
       </div>
     </div>
   );
@@ -360,7 +360,6 @@ export function AuthPage() {
             <IconButton
               text={Locales.User.Login}
               className={styles["auth-get-code-btn"]}
-              type="primary"
               onClick={() => setTab("phonePswd")}
             />
           </div>
@@ -403,7 +402,6 @@ export function AuthPage() {
             <IconButton
               text={Locales.User.Register}
               className={styles["auth-get-code-btn"]}
-              type="primary"
               onClick={() => setTab("register")}
             />
   
