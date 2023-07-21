@@ -138,7 +138,7 @@ const CaptchaLogin: React.FC = () => {
   );
 };
 
-const EmailLogin: React.FC = () => {
+const PasswdLogin: React.FC = () => {
   const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -209,67 +209,153 @@ const EmailLogin: React.FC = () => {
   );
 };
 
-const WeChatLogin: React.FC = () => {
+const PhoneReg: React.FC = () => {
   const navigate = useNavigate();
-  const [ticket, setTicket] = useState("");
+  const [register, setRegister] = useState("");
+  const [code, setCode] = useState("");
+
+  const [password, setPassword] = useState("");
+
+  const [isSubmitting, handleSubmit] = usePreventFormSubmit();
+  const [isCodeSubmitting, handleCodeSubmit] = usePreventFormSubmit();
+
   const updateSessionToken = useUserStore((state) => state.updateSessionToken);
 
-  useIntervalAsync(
-    useCallback(async () => {
-      if (!ticket) {
-        const res = await apiUserLoginGetTicket();
-        setTicket(res.ticket);
-      } else {
-        const res = await apiUserLoginGet(ticket);
-        switch (res.status) {
-          case serverStatus.success:
-            updateSessionToken(
-              res.signedToken.token,
-              res.signedToken.expiredAt,
-            );
-            showToast(Locales.User.Success(Locales.User.Login));
-            navigate(Path.Chat);
-            return;
-        }
-      }
-    }, [ticket, navigate, updateSessionToken]),
-    3000,
-  );
+  const handleCode = async (event: FormEvent | undefined) => {
+    if (!register)
+      return showToast(Locales.User.PleaseInput(Locales.User.Phone));
 
-  if (!ticket) return <Loading noLogo={true} />;
+    if (!password)
+      return showToast(Locales.User.PleaseInput(Locales.User.Password));
+
+    const type = register.includes("@") ? "email" : "phone";
+    const res = await apiUserRegisterCode(type, register);
+
+    switch (res.status) {
+      case serverStatus.success: {
+        return showToast(Locales.User.Code + Locales.User.Sent);
+      }
+      case serverStatus.notExist: {
+        return showToast(Locales.User.NotYetRegister);
+      }
+      case serverStatus.wrongPassword: {
+        return showToast(Locales.User.PasswordError);
+      }
+      default: {
+        return showToast(Locales.User.PasswordError);
+      }
+    }
+  };
+
+  const handleReg = async (e: FormEvent | undefined) => {
+    if (!register || !code)
+      return showToast(
+        Locales.User.PleaseInput(`${Locales.User.Phone}, ${Locales.User.Code}`),
+      );
+
+    const res = await apiUserRegister({
+      phone: register,
+      verificationCode: code,
+    });
+
+    switch (res.status) {
+      case serverStatus.success: {
+        showToast(Locales.User.Success(Locales.User.Login));
+        updateSessionToken(res.signedToken.token, res.signedToken.expiredAt);
+
+        console.log("reg uid:", res.uid);
+        navigate(Path.Chat);
+        break;
+      }
+      case serverStatus.notExist: {
+        showToast(Locales.User.NotYetRegister);
+        break;
+      }
+      case serverStatus.wrongPassword: {
+        showToast(Locales.User.PasswordError);
+        break;
+      }
+      default: {
+        showToast(Locales.Error.Unknown);
+        break;
+      }
+    }
+  };
 
   return (
     <div className={styles["form-container"]}>
-      <span className={styles["title"]}>{Locales.User.WeChatLogin}</span>
-      <Image
-        className={styles["qrcode"]}
-        src={`https://mp.weixin.qq.com/cgi-bin/showqrcode?ticket=${ticket}`}
-        alt="Wechat QrCdoe"
-        width={200}
-        height={200}
+      <input
+        type="text"
+        id="phone"
+        value={register}
+        className={styles["auth-input"]}
+        onChange={(e) => setRegister(e.target.value)}
+        placeholder={`${Locales.User.Phone} / ${Locales.User.Email}`}
+        required
       />
+      
+      <div className={styles["row"]}>
+        <input
+          type="password"
+          id="password"
+          value={password}
+          className={styles["auth-input"]}
+          onChange={(e) => setPassword(e.target.value)}
+          placeholder={Locales.User.Password}
+          required
+        />
+      </div>
+
+
+      <div className={styles["row"]}>
+        <input
+          type="text"
+          id="code"
+          value={code}
+          className={styles["auth-input"]}
+          onChange={(e) => setCode(e.target.value)}
+          placeholder={Locales.User.Code}
+          required
+        />
+        <IconButton
+          text={isCodeSubmitting ? Locales.User.Sent : Locales.User.GetCode}
+          className={styles["auth-get-code-btn"]}
+          type="primary"
+          onClick={() => handleCodeSubmit(undefined, handleCode)}
+        />
+      </div>
+      <div className={styles["auth-actions"]}>
+        <IconButton
+          onClick={() => handleSubmit(undefined, handleReg)}
+          text={`${Locales.User.Register}`}
+          className={styles["auth-submit-btn"]}
+          type="primary"
+        />
+      </div>
     </div>
   );
 };
 
+
+
 export function AuthPage() {
-  const [tab, setTab] = useState<"email" | "phone" | "wechat">("phone");
+  const [tab, setTab] = useState<"phonePswd" | "phoneCode" | "register">("phonePswd");
   console.log(wechatService);
   let content = null;
   switch (tab) {
-    case "wechat":
+    case "register":
       content = (
         <div className={styles["wechat-part"]}>
           <div className={styles["wechat-part-title"]}>
             {Locales.User.WeChatLogin}
           </div>
           <div className={styles["wechat-login-container"]}>
-            <WeChatLogin />
+            <PhoneReg />
           </div>
           <div
             className={styles["wechat-part-go-back"]}
             onClick={() => {
-              setTab("phone");
+              setTab("phonePswd");
             }}
           >
             <LeftArrow />
@@ -277,31 +363,31 @@ export function AuthPage() {
         </div>
       );
       break;
-    case "email":
-    case "phone":
+    case "phonePswd":
+    case "phoneCode":
       content = (
         <div className={styles["password-part"]}>
           <div className={styles["tab-container"]}>
             <button
               className={`${styles["tab-button"]} ${
-                tab === "phone" ? styles.active : ""
+                tab === "phonePswd" ? styles.active : ""
               }`}
-              onClick={() => setTab("phone")}
+              onClick={() => setTab("phonePswd")}
             >
-              {Locales.User.CodeLogin}
+              {Locales.User.PasswordLogin}
             </button>
             {emailService && (
               <button
                 className={`${styles["tab-button"]} ${
-                  tab === "email" ? styles.active : ""
+                  tab === "phoneCode" ? styles.active : ""
                 }`}
-                onClick={() => setTab("email")}
+                onClick={() => setTab("phoneCode")}
               >
-                {Locales.User.PasswordLogin}
+                {Locales.User.CodeLogin}
               </button>
             )}
           </div>
-          {tab === "phone" ? <CaptchaLogin /> : <EmailLogin />}
+          {tab === "phonePswd" ? <PasswdLogin /> : <CaptchaLogin />}
 
           <div className={styles["divider"]}>
             <div className={styles["divider-line"]} />
@@ -309,13 +395,13 @@ export function AuthPage() {
             <div className={styles["divider-line"]} />
           </div>
           <div className={styles["third-part-login-options"]}>
-            <img
-              src={WechatLogo.src}
-              className={styles["third-part-option"]}
-              onClick={() => {
-                setTab("wechat");
-              }}
+            <IconButton
+              text={Locales.User.Register}
+              className={styles["auth-get-code-btn"]}
+              type="primary"
+              onClick={() => setTab("register")}
             />
+  
           </div>
         </div>
       );
