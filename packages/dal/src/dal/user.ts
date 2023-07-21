@@ -117,6 +117,8 @@ export class UserDAL {
       },
     });
 
+    console.log("existUser.length:", existUser.length);
+
     if (existUser.length > 0) {
       if (email) {
         throw new ServerError(

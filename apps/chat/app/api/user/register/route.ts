@@ -31,6 +31,8 @@ export async function POST(req: NextRequest): Promise<Response> {
       invitation_code: invitationCode,
     } = await ChatRequest.UserRegisterPost.parseAsync(await req.json());
 
+    console.log("reg phone", phone);
+    console.log("reg register_code", registerCode);
     /* Activation verification code */
     const result = await UserDAL.register({
       email,
