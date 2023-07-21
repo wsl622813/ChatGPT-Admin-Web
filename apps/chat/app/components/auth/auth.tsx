@@ -345,21 +345,26 @@ export function AuthPage() {
   switch (tab) {
     case "register":
       content = (
-        <div className={styles["wechat-part"]}>
-          <div className={styles["wechat-part-title"]}>
-            {Locales.User.WeChatLogin}
-          </div>
+        <div className={styles["password-part"]}>
+  
           <div className={styles["wechat-login-container"]}>
             <PhoneReg />
           </div>
-          <div
-            className={styles["wechat-part-go-back"]}
-            onClick={() => {
-              setTab("phonePswd");
-            }}
-          >
-            <LeftArrow />
+
+          <div className={styles["divider"]}>
+            <div className={styles["divider-line"]} />
+            <div className={styles["divider-text"]}>or</div>
+            <div className={styles["divider-line"]} />
           </div>
+          <div className={styles["third-part-login-options"]}>
+            <IconButton
+              text={Locales.User.Login}
+              className={styles["auth-get-code-btn"]}
+              type="primary"
+              onClick={() => setTab("phonePswd")}
+            />
+          </div>
+
         </div>
       );
       break;
