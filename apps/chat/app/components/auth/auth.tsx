@@ -203,7 +203,11 @@ const PasswdLogin: React.FC = () => {
       </div>
 
       <div className={styles["auth-actions"]}>
-        <IconButton text={Locales.User.Login} type="primary" />
+        <IconButton 
+          onClick={() => handleSubmit(undefined, handleLogin)}
+          text={Locales.User.Login} 
+          type="primary" 
+        />
       </div>
     </div>
   );
