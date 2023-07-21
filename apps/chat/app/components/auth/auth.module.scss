@@ -80,6 +80,17 @@
 
 .password-part {
   width: 100%;
+  .reg_title{
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    .reg-part-text {
+      border: none;
+      background-color: transparent;
+      font-weight: bold;
+    }
+  }
   .divider {
     display: flex;
     justify-content: center;
