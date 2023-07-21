@@ -24,8 +24,8 @@ model Role {
 
 model User {
   userId       Int     @id @default(autoincrement())
-  email        String? @unique // 邮箱
-  name         String? @unique // 用户名
+  email        String?  // 邮箱
+  name         String? // 用户名
   passwordHash String? @db.Text // 密码
   phone        String? @unique // 手机 +86
 
