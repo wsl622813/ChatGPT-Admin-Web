@@ -28,7 +28,6 @@
     - New Bing
 - 收益模式
     - 广告
-    - 分销
 
 <details><summary>思维导图</summary>
 
