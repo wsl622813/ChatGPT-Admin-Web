@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { UserDAL, providerType, WechatDAL, resumeToken } from "@caw/dal";
-import { serverStatus, ChatRequest } from "@caw/types";
+import { ServerError, serverStatus, ChatRequest } from "@caw/types";
 import { serverErrorCatcher } from "@/app/api/catcher";
 import { WechatLib } from "@/app/lib/wechat";
 import { getRuntime } from "@/app/utils/get-runtime";
@@ -55,6 +55,9 @@ export const POST = serverErrorCatcher(async (req: NextRequest) => {
       })),
     });
   } catch (error) {
+    if (error instanceof ServerError)
+      return NextResponse.json({ status: error.errorCode, msg: error.message });
+
     console.error("[SERVER ERROR]", error);
     return new Response("[INTERNAL ERROR]", { status: 500 });
   }
