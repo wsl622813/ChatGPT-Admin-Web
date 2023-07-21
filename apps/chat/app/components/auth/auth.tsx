@@ -147,8 +147,6 @@ const PasswdLogin: React.FC = () => {
   const updateSessionToken = useUserStore((state) => state.updateSessionToken);
 
   const handleLogin = async (e: FormEvent) => {
-    e.preventDefault();
-
     if (!phone || !password)
       return showToast(
         Locales.User.PleaseInput(
