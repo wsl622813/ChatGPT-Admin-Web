@@ -357,11 +357,11 @@ export function AuthPage() {
             <div className={styles["divider-line"]} />
           </div>
           <div className={styles["third-part-login-options"]}>
-            <IconButton
-              text={Locales.User.Login}
-              className={styles["auth-get-code-btn"]}
+            <button
               onClick={() => setTab("phonePswd")}
-            />
+            >
+              {Locales.User.Login}
+            </button>
           </div>
 
         </div>
@@ -399,11 +399,11 @@ export function AuthPage() {
             <div className={styles["divider-line"]} />
           </div>
           <div className={styles["third-part-login-options"]}>
-            <IconButton
-              text={Locales.User.Register}
-              className={styles["auth-get-code-btn"]}
+            <button
               onClick={() => setTab("register")}
-            />
+            >
+              {Locales.User.Register}
+            </button>
   
           </div>
         </div>
