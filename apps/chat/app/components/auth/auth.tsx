@@ -346,7 +346,9 @@ export function AuthPage() {
     case "register":
       content = (
         <div className={styles["password-part"]}>
-  
+          <div className={styles["wechat-part-title"]}>
+            {Locales.User.UserRegister}
+          </div>
           <div className={styles["wechat-login-container"]}>
             <PhoneReg />
           </div>

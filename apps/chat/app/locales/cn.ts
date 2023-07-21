@@ -14,6 +14,7 @@ const cn = {
     WeChatLogin: "微信登录",
     CodeLogin: "验证码登录",
     PasswordLogin: "密码登录",
+    UserRegister: "用户注册",
 
     Register: "注册",
     Success: (action: string) => `${action}成功`,
