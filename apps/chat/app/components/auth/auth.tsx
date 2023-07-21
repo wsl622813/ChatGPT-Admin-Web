@@ -257,6 +257,7 @@ const PhoneReg: React.FC = () => {
 
     const res = await apiUserRegister({
       phone: register,
+      password: password,
       verificationCode: code,
     });
 
