@@ -44,12 +44,9 @@ interface PaymentArgs {
 }
 
 interface PaymentResponse {
-  openid: number; // 来自文档：订单id(此处有个历史遗留错误，返回名称是openid，值是orderid，一般对接不需要这个参数)
-  url_qrcode: string;
-  url: string;
-  errcode: number;
-  errmsg: string;
-  hash?: string;
+  code: number;
+  message: string;
+  data: string;
 }
 
 export interface CallbackBody {
@@ -125,7 +122,7 @@ export async function startPay({
 
 
   try {
-    return (await result.json()) as PaymentResponse;
+    return result as PaymentResponse;
   } catch (e) {
     return null;
   }
