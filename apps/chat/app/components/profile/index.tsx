@@ -28,7 +28,7 @@ function PricingItem(props: {
   async function handleUpgrade(plan: Plan, price: Price) {
     const req = await apiPay(plan, price);
     if (!req) return showToast(Locale.Error.ConfigurationError);
-    props.router.push(req.url);
+    props.router.push(req.data);
   }
 
   return (
