@@ -1,7 +1,8 @@
 import { NextRequest, NextResponse } from "next/server";
 import { ChatRequest } from "@caw/types";
 import { OrderDAL } from "@caw/dal";
-import { startPay } from "@/app/lib/pay/xunhu";
+//import { startPay } from "@/app/lib/pay/xunhu";
+import { startPay } from "@/app/lib/pay/zhifubao";
 import { getRuntime } from "@/app/utils/get-runtime";
 import { serverErrorCatcher } from "@/app/api/catcher";
 import { gerUserId } from "@/app/api/utils";
