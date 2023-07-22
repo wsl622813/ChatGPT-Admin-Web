@@ -121,6 +121,7 @@ export async function startPay({
   const result = service.createPageOrderURL(data, basicParams)
   console.log("result.code", result.code)
   console.log("result.message", result.message)
+  console.log("result.data", result.data)
 
 
   try {
