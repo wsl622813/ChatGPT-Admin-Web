@@ -14,7 +14,8 @@ const appSecret = process.env.XUNHU_PAY_APPSECRET!;
 const options = {
   app_id: '2021001167685633',
   appPrivKeyFile: appSecret,
-  alipayPubKeyFile: "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAg5gegpGI96CVu2tkDj7sKoPqSZGsK++oTrd1ICI1p06LpgHr3DnluHrzq4zCAQWitKEzLSUxHmRFEKp3Y6T+PJaTN+CAQUuBzqCNlmhMzJzhH8Qi9XEhMCTTtA+0A/An6kvw7kG59+Gk7bzZlBzxIXovuowtq3CljHqsHlHTbRi05p8zf7rhtIpJFVZzuOa+119/cNVDDyC89KriG9q12dWwAOHl/VbW7e+Qosya7ILPZpl94ILg4EtjyjjRb61QszJx2HUgEfaCC9xqkxe6+176TDxS3ShWEENr7F0EkBO8D2jZ0CXxTDDdsufPfNXcHBJgjh/F3mKU12rsdWJnIQIDAQAB"
+  alipayPubKeyFile: "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAg5gegpGI96CVu2tkDj7sKoPqSZGsK++oTrd1ICI1p06LpgHr3DnluHrzq4zCAQWitKEzLSUxHmRFEKp3Y6T+PJaTN+CAQUuBzqCNlmhMzJzhH8Qi9XEhMCTTtA+0A/An6kvw7kG59+Gk7bzZlBzxIXovuowtq3CljHqsHlHTbRi05p8zf7rhtIpJFVZzuOa+119/cNVDDyC89KriG9q12dWwAOHl/VbW7e+Qosya7ILPZpl94ILg4EtjyjjRb61QszJx2HUgEfaCC9xqkxe6+176TDxS3ShWEENr7F0EkBO8D2jZ0CXxTDDdsufPfNXcHBJgjh/F3mKU12rsdWJnIQIDAQAB",
+  gatewayUrl: "https://openapi.alipay.com/gateway.do",
 }
 
 
