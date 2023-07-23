@@ -16,6 +16,7 @@ const options = {
   appPrivKeyFile: appSecret,
   alipayPubKeyFile: "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAg5gegpGI96CVu2tkDj7sKoPqSZGsK++oTrd1ICI1p06LpgHr3DnluHrzq4zCAQWitKEzLSUxHmRFEKp3Y6T+PJaTN+CAQUuBzqCNlmhMzJzhH8Qi9XEhMCTTtA+0A/An6kvw7kG59+Gk7bzZlBzxIXovuowtq3CljHqsHlHTbRi05p8zf7rhtIpJFVZzuOa+119/cNVDDyC89KriG9q12dWwAOHl/VbW7e+Qosya7ILPZpl94ILg4EtjyjjRb61QszJx2HUgEfaCC9xqkxe6+176TDxS3ShWEENr7F0EkBO8D2jZ0CXxTDDdsufPfNXcHBJgjh/F3mKU12rsdWJnIQIDAQAB",
   gatewayUrl: "https://openapi.alipay.com/gateway.do",
+  notify_url: "http://172.105.119.181:3000/api/callback",
 }
 
 
@@ -51,17 +52,18 @@ interface PaymentResponse {
 }
 
 export interface CallbackBody {
-  trade_order_id: string;
-  trade_fee: number;
-  transaction_id: number;
-  open_order_id: string;
-  order_title: string;
-  status: string;
-  plugins?: string;
-  appid: string;
-  time: string;
-  nonce_str: string;
-  hash?: string;
+  notify_time: string; // 通知的发送时间。格式为yyyy-MM-dd HH:mm:ss
+  notify_type: string; // 通知的类型
+  notify_id: string; // 通知校验ID
+  app_id: string; // 支付宝分配给开发者的应用Id
+  charset: string; // 编码格式，如utf-8、gbk、gb2312等
+  version: string; // 调用的接口版本，固定为：1.0
+  sign_type: string; // 签名类型
+  trade_no: string;// 支付宝交易凭证号
+  out_trade_no: string; // 原支付请求的商户订单号
+  sign: string; // 签名
+  trade_status: string; //交易状态
+  [key: string]: string | number// 可选参数
 }
 
 /**
@@ -109,12 +111,12 @@ export async function startPay({
 
   const service = new Alipay(options)
   const data = {
-    subject: '辣条',
-    out_trade_no: '1232423',
-    total_amount: '100'
+    subject: title,
+    out_trade_no: orderId,
+    total_amount: price.toString()
   }
   const basicParams = {
-    return_url: 'http://xxx.com'
+    return_url: 'http://172.105.119.181:3000/'
   }
   const result = service.createPageOrderURL(data, basicParams)
   console.log("result.code", result.code)
@@ -148,7 +150,21 @@ export async function handleCallback(req: NextRequest) {
    Currently only the appId is being validated.
    In the future, attach will also need to be validated to improve security.
    */
-  if (body.appid !== appId) return null;
+  const service = new Alipay(options)
+  const notifyResult = service.makeNotifyResponse(body)
+  console.log("notifyResult.code", notifyResult.code)
+  console.log("notifyResult.message", notifyResult.message)
+  if (notifyResult.code == 0 ) // 验签成功
+  {
+    if (body.trade_status === "TRADE_SUCCESS")
+    {
+      console.log("body.out_trade_no", body.out_trade_no)
+      return body.out_trade_no;
+    }
+  }
+
+
+  return null;
 
   /* == Verify Signature == */
   // const trueHash = body.hash!
@@ -161,5 +177,4 @@ export async function handleCallback(req: NextRequest) {
   //   return null
   /* ====================== */
 
-  return body.trade_order_id;
 }

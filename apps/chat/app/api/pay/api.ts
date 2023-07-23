@@ -11,6 +11,7 @@ export async function apiPay(plan: Plan, price: Price) {
       method: "POST",
       body: JSON.stringify({
         priceId: price.id,
+        priceName: price.name,
         planId: plan.planId,
       } as z.infer<typeof ChatRequest.RequestNewOrder>),
     })

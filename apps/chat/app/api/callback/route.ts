@@ -6,7 +6,7 @@ import { NextRequest } from "next/server";
 
 import { OrderDAL } from "@caw/dal";
 
-import { handleCallback } from "@/app/lib/pay/xunhu";
+import { handleCallback } from "@/app/lib/pay/zhifubao";
 import { getRuntime } from "@/app/utils/get-runtime";
 
 export const runtime = getRuntime();

@@ -11,7 +11,7 @@ export const runtime = getRuntime();
 
 export const POST = serverErrorCatcher(async (req: NextRequest) => {
   const userId = await gerUserId(req);
-  const { planId, priceId } = await ChatRequest.RequestNewOrder.parseAsync(
+  const { planId, priceName, priceId } = await ChatRequest.RequestNewOrder.parseAsync(
     await req.json(),
   );
 
@@ -26,7 +26,7 @@ export const POST = serverErrorCatcher(async (req: NextRequest) => {
     await startPay({
       orderId: order.orderId.toString(),
       price: order.amount,
-      title: "机器人对话付费购买",
+      title: priceName,
       attach: "",
     }),
   );

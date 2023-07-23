@@ -33,6 +33,7 @@ export namespace ChatRequest {
 
   export const RequestNewOrder = z.object({
     planId: z.number(),
+    priceName: z.string(),
     priceId: z.number(),
   });
 }
