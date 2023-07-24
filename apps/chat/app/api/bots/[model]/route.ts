@@ -43,12 +43,12 @@ export const POST = serverErrorCatcher(
         );
     }
 
-    // if (await rateLimit(userId.toString(), model, 10, 10000))
-    //   throw new ServerError(
-    //     serverStatus.tooMany,
-    //     "too many request in fixed time",
-    //   );
-    //
+    if (await rateLimit(userId.toString(), model, 10, 10000))
+      throw new ServerError(
+        serverStatus.tooMany,
+        "too many request in fixed time",
+      );
+    
     // if (!(await textSecurity(messages)))
     //   throw new ServerError(
     //     serverStatus.contentNotSafe,
