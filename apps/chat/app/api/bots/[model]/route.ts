@@ -45,13 +45,14 @@ export const POST = serverErrorCatcher(
         );
     }
 
-    const plan = await UserDAL.getUserPlan({userId});
-    console.log("plan:", plan)
+    //使用resetChances字段作为plan, 0为普通用户, 1为付费用户
+    const user = await UserDAL.getUser({userId});
+    console.log("plan:", user.resetChances)
 
     //默认免费用户三分钟内2次, 付费用户三分钟内20次
     let limitNum = 2;
     let duration = 10800;
-    if (plan != 0) {
+    if (user.resetChances === 1) {
       limitNum = 20;
     }
     console.log("limitNum:", limitNum)

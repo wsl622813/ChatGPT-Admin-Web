@@ -230,13 +230,6 @@ export class UserDAL {
   }
 
 
-  //使用resetChances字段作为plan, 0为普通用户, 1为付费用户
-  static async getUserPlan(userId: number) {
-    const user =  client.user.findUnique({ where: { userId: userId } });
-
-    return user.resetChances;
-  }
-
   async getCurrentSubscription() {}
 
   async getAllSubscription() {}
