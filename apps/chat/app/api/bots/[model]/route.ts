@@ -45,7 +45,7 @@ export const POST = serverErrorCatcher(
         );
     }
 
-    const plan = await UserDAL.getPlan({userId});
+    const plan = await UserDAL.getUserPlan({userId});
 
     //默认免费用户三分钟内2次, 付费用户三分钟内20次
     let limitNum = 2;

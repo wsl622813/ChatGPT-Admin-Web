@@ -231,7 +231,7 @@ export class UserDAL {
 
 
   //使用resetChances字段作为plan, 0为普通用户, 1为付费用户
-  async getPlan(userId: number) {
+  static async getUserPlan(userId: number) {
     const user = await client.user.findUniqueOrThrow({
       where: {
         userId: userId,
