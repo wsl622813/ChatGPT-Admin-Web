@@ -1,12 +1,14 @@
 import { NextRequest, NextResponse } from "next/server";
 import { OpenAIBot, BingBot } from "@caw/bots";
-import { parseUserId } from "@caw/dal";
+import { parseUserId, UserDAL} from "@caw/dal";
 import { rateLimit } from "@caw/ratelimit";
 import { BotType, ServerError, serverStatus } from "@caw/types";
 
 import { textSecurity } from "@/app/lib/content";
 import { getRuntime } from "@/app/utils/get-runtime";
 import { serverErrorCatcher } from "@/app/api/catcher";
+
+
 
 const OPENAI_API_KEY = process.env.OPENAI_KEY!;
 const BING_COOKIE = process.env.BING_COOKIE!;
@@ -43,7 +45,16 @@ export const POST = serverErrorCatcher(
         );
     }
 
-    if (!(await rateLimit(userId.toString(), model, 10, 10000)))
+    const plan = await UserDAL.getPlan({userId});
+
+    //默认免费用户三分钟内2次, 付费用户三分钟内20次
+    let limitNum = 2;
+    let duration = 10800;
+    if (plan != 0) {
+      limitNum = 20;
+    }
+
+    if (!(await rateLimit(userId.toString(), model, limitNum, duration)))
       throw new ServerError(
         serverStatus.tooMany,
         "too many request in fixed time",

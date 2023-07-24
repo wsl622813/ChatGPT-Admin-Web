@@ -229,28 +229,15 @@ export class UserDAL {
     };
   }
 
-  async resetChances(userId: number, value: number) {
+
+  //使用resetChances字段作为plan, 0为普通用户, 1为付费用户
+  async getPlan(userId: number) {
     const user = await client.user.findUniqueOrThrow({
       where: {
         userId: userId,
-      },
-      select: {
-        resetChances: true,
-      },
+      }
     });
-    if (user.resetChances + value < 0)
-      throw new ServerError(
-        serverStatus.notEnoughChances,
-        "not enough chances"
-      );
-    return await client.user.update({
-      where: {
-        userId: userId,
-      },
-      data: {
-        resetChances: value,
-      },
-    });
+    return user.resetChances;
   }
 
   async getCurrentSubscription() {}
