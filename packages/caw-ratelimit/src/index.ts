@@ -20,8 +20,10 @@ export async function rateLimit(
       //return (await limiter?.limit("chat"))?.success ?? false;
       if (limiter != null)
       {
-        const { success } = await limiter.limit("chat");
+        const { success, limit, remaining } = await limiter.limit("chat");
         console.log("request may pass(true) or exceeded the limit(false)", success)
+        console.log("limit:", limit)
+        console.log("remaining:)", remaining)
         return success
       }
 
