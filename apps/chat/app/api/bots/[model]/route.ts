@@ -43,7 +43,7 @@ export const POST = serverErrorCatcher(
         );
     }
 
-    if (await rateLimit(userId.toString(), model, 10, 10000))
+    if (!(await rateLimit(userId.toString(), model, 10, 10000)))
       throw new ServerError(
         serverStatus.tooMany,
         "too many request in fixed time",
