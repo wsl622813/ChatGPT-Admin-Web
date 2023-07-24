@@ -229,6 +229,29 @@ export class UserDAL {
     };
   }
 
+  async resetChances(userId: number, value: number) {
+    const user = await client.user.findUniqueOrThrow({
+      where: {
+        userId: userId,
+      },
+      select: {
+        resetChances: true,
+      },
+    });
+    if (user.resetChances + value < 0)
+      throw new ServerError(
+        serverStatus.notEnoughChances,
+        "not enough chances"
+      );
+    return await client.user.update({
+      where: {
+        userId: userId,
+      },
+      data: {
+        resetChances: value,
+      },
+    });
+  }
 
   async getCurrentSubscription() {}
 

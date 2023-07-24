@@ -46,7 +46,7 @@ export const POST = serverErrorCatcher(
     }
 
     //使用resetChances字段作为plan, 0为普通用户, 1为付费用户
-    const user = await UserDAL.getUser({userId});
+    const user = await UserDAL.getUser({id: userId});
     console.log("plan:", user.resetChances)
 
     //默认免费用户三分钟内2次, 付费用户三分钟内20次
