@@ -1,4 +1,5 @@
-const rateLimitProvider = process.env.RATELIMIT_PROVIDER!;
+//const rateLimitProvider = process.env.RATELIMIT_PROVIDER!;
+const rateLimitProvider = "upstash";
 
 export async function rateLimit(
   userId: string,
