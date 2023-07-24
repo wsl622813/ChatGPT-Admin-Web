@@ -46,6 +46,7 @@ export const POST = serverErrorCatcher(
     }
 
     const plan = await UserDAL.getUserPlan({userId});
+    console.log("plan:", plan)
 
     //默认免费用户三分钟内2次, 付费用户三分钟内20次
     let limitNum = 2;
@@ -53,6 +54,7 @@ export const POST = serverErrorCatcher(
     if (plan != 0) {
       limitNum = 20;
     }
+    console.log("limitNum:", limitNum)
 
     if (!(await rateLimit(userId.toString(), model, limitNum, duration)))
       throw new ServerError(
