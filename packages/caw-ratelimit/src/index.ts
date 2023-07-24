@@ -18,9 +18,14 @@ export async function rateLimit(
         duration,
       });
       //return (await limiter?.limit("chat"))?.success ?? false;
-      const isLimitCheckOK = await limiter?.limit("chat")?.success ?? false;
-      console.log("request may pass(true) or exceeded the limit(false)", isLimitCheckOK)
-      return isLimitCheckOK
+      if (limiter != null)
+      {
+        const { success } = await limiter.limit("chat");
+        console.log("request may pass(true) or exceeded the limit(false)", success)
+        return success
+      }
+
+
     }
     default:
       return true;

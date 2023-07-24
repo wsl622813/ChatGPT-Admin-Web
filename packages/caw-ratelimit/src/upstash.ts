@@ -15,7 +15,7 @@ export class ModelRateLimiter extends Ratelimit {
   static async create({
     userId,
     model,
-    limit,
+    limitnum,
     duration /* unit is second */,
     redis = defaultRedis,
   }: CreateModelRateLimiterParams): Promise<ModelRateLimiter | null> {
@@ -23,7 +23,7 @@ export class ModelRateLimiter extends Ratelimit {
       redis,
       userId,
       model,
-      limit,
+      limitnum,
       window: `${duration}s` as Duration,
     });
   }
@@ -31,14 +31,14 @@ export class ModelRateLimiter extends Ratelimit {
   #userId: string;
   #windowSize: number;
   #redis: Redis;
-  #limit: number;
+  #limitnum: number;
   #prefix: string;
 
   private constructor({
     redis = defaultRedis,
     userId,
     model,
-    limit,
+    limitnum,
     window,
   }: ConstructModelRateLimiterParams) {
     const prefix = `ratelimit:${userId}:${model}`;
@@ -46,13 +46,13 @@ export class ModelRateLimiter extends Ratelimit {
     super({
       redis,
       prefix,
-      limiter: Ratelimit.slidingWindow(limit, window),
+      limiter: Ratelimit.slidingWindow(limitnum, window),
     });
 
     this.#userId = userId;
     this.#windowSize = ms(window);
     this.#redis = redis;
-    this.#limit = limit;
+    this.#limitnum = limitnum;
     this.#prefix = prefix;
   }
 
@@ -64,7 +64,7 @@ export class ModelRateLimiter extends Ratelimit {
 export type CreateModelRateLimiterParams = {
   userId: string;
   model: string;
-  limit: number;
+  limitnum: number;
   duration: number;
   redis?: Redis;
 };
@@ -73,6 +73,6 @@ type ConstructModelRateLimiterParams = {
   redis?: Redis;
   userId: string;
   model: string;
-  limit: number;
+  limitnum: number;
   window: Duration;
 };
