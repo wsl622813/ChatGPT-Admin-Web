@@ -4,7 +4,7 @@ const rateLimitProvider = "upstash";
 export async function rateLimit(
   userId: string,
   model: string,
-  limit: number,
+  limitnum: number,
   duration: number
 ): Promise<boolean> {
   switch (rateLimitProvider.toLowerCase()) {
@@ -14,7 +14,7 @@ export async function rateLimit(
       ).ModelRateLimiter.create({
         userId,
         model,
-        limit,
+        limitnum,
         duration,
       });
       //return (await limiter?.limit("chat"))?.success ?? false;
