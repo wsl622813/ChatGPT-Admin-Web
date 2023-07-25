@@ -18,6 +18,7 @@ const en: LocaleType = {
 
     CodeLogin: "Captcha Login",
     PasswordLogin: "Password Login",
+    UserRegister: "Sign Up",
 
     Success: (action: string) => `${action} successfully`,
     Failed: (action: string) => `${action} failed`,
