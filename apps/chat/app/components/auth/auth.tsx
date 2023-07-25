@@ -78,7 +78,7 @@ const CaptchaLogin: React.FC = () => {
         showToast(Locales.User.Success(Locales.User.Login));
         updateSessionToken(res.signedToken.token, res.signedToken.expiredAt);
 
-        console.log("reg uid:", res.uid);
+        //console.log("reg uid:", res.uid);
         navigate(Path.Chat);
         break;
       }
