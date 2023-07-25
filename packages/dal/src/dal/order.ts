@@ -1,5 +1,5 @@
 import client, { Prisma } from "@caw/database";
-import { OrderStatus, type Order, type Subscription } from "@prisma/client";
+import { OrderStatus, type Order, type Subscription ,type User} from "@prisma/client";
 
 export class OrderDAL {
   constructor() {}
@@ -54,7 +54,7 @@ export class OrderDAL {
 
   static async payOrder(
     orderId: string
-  ): Promise<{ order: Order; subscription: Subscription }> {
+  ): Promise<{ order: Order; subscription: Subscription ; user: User}> {
     const newOrder = await client.order.update({
       where: {
         orderId: orderId,
@@ -66,6 +66,17 @@ export class OrderDAL {
         price: true,
       },
     });
+
+
+    const user = await client.user.update({
+      where: {
+        userId: newOrder.userId,
+      },
+      data: {
+        resetChances: 1,
+      }
+    });
+
     const currentDate = new Date();
     const subscriptionInput: Prisma.SubscriptionCreateInput = {
       createdAt: currentDate,
@@ -93,6 +104,7 @@ export class OrderDAL {
       subscription: await client.subscription.create({
         data: subscriptionInput,
       }),
+      user: user,
     };
   }
 }
