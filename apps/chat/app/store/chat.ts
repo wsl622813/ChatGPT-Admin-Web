@@ -444,6 +444,7 @@ export const useChatStore = create<ChatStore>()(
             messages: topicMessages,
             config: {
               model: "gpt-3.5-turbo",
+              stream: true
             },
             onFinish(message) {
               get().updateCurrentSession(
