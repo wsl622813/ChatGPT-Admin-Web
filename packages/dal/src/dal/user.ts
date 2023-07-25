@@ -29,10 +29,6 @@ export class UserDAL {
     providerContent: string;
   }): Promise<User | null> {
     switch (providerId) {
-      case "email":
-        return client.user.findUnique({
-          where: { email: providerContent },
-        });
       case "phone":
         return client.user.findUnique({
           where: { phone: providerContent },
@@ -79,7 +75,7 @@ export class UserDAL {
     if (email || phone) {
       if (email && phone)
         throw Error("Cannot pass both email and phone at one time");
-      if (email && !password)
+      if (phone && !password)
         throw Error(
           "The password must be registered at the time of using cell phone number or email"
         );
@@ -93,7 +89,7 @@ export class UserDAL {
        * */
       const validationCode = await client.registerCode.findUnique({
         where: {
-          register: phone ? phone : email,
+          register: phone,
         },
       });
       if (validationCode?.code.toString() !== registerCode)
