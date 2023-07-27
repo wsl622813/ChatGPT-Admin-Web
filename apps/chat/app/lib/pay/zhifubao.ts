@@ -112,7 +112,7 @@ export async function startPay({
   const data = {
     subject: title,
     out_trade_no: orderId,
-    total_amount: price.toString()
+    total_amount: price.toFixed(1)
   }
   const basicParams = {
     return_url: return_url
