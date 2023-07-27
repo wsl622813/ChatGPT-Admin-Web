@@ -25,7 +25,7 @@ export const POST = serverErrorCatcher(async (req: NextRequest) => {
   return NextResponse.json(
     await startPay({
       orderId: order.orderId.toString(),
-      price: order.amount,
+      price: order.amount * 1000,
       title: priceName,
       attach: "",
     }),

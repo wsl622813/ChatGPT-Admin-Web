@@ -28,12 +28,12 @@ export class OrderDAL {
         id: priceId,
       },
     });
-    const amount = parseFloat(price.amount.toFixed(1)) ;
-    console.log("amount:", amount.toFixed(1));
+    //const amount = parseFloat(price.amount.toFixed(1)) ;
+    //console.log("amount:", price.amount.toFixed(1));
     const orderInput: Prisma.OrderCreateInput = {
       orderId: this.getNextId(),
       count: count,
-      amount: amount.toFixed(1) ,
+      amount: price.amount * 0.001 ,
       status: OrderStatus.Pending,
       plan: {
         connect: {
