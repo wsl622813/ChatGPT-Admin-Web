@@ -8,12 +8,13 @@ const Alipay = require('alipay-mobile').default
 const return_url = process.env.DOMAIN!;
 const notify_url = process.env.CALLBACK_DOMAIN! ;
 const appSecret = process.env.XUNHU_PAY_APPSECRET!;
+const appid = process.env.APPID!;
 //notify_url: 异步通知url
 //app_id: 开放平台 appid
 //appPrivKeyFile: 你的应用私钥
 //alipayPubKeyFile: 蚂蚁金服公钥
 const options = {
-  app_id: '2021001167685633',
+  app_id: appid,
   appPrivKeyFile: appSecret,
   alipayPubKeyFile: "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAg5gegpGI96CVu2tkDj7sKoPqSZGsK++oTrd1ICI1p06LpgHr3DnluHrzq4zCAQWitKEzLSUxHmRFEKp3Y6T+PJaTN+CAQUuBzqCNlmhMzJzhH8Qi9XEhMCTTtA+0A/An6kvw7kG59+Gk7bzZlBzxIXovuowtq3CljHqsHlHTbRi05p8zf7rhtIpJFVZzuOa+119/cNVDDyC89KriG9q12dWwAOHl/VbW7e+Qosya7ILPZpl94ILg4EtjyjjRb61QszJx2HUgEfaCC9xqkxe6+176TDxS3ShWEENr7F0EkBO8D2jZ0CXxTDDdsufPfNXcHBJgjh/F3mKU12rsdWJnIQIDAQAB",
   gatewayUrl: "https://openapi.alipay.com/gateway.do",
