@@ -16,7 +16,7 @@ const appid = process.env.APPID!;
 const options = {
   app_id: appid,
   appPrivKeyFile: appSecret,
-  alipayPubKeyFile: "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAg5gegpGI96CVu2tkDj7sKoPqSZGsK++oTrd1ICI1p06LpgHr3DnluHrzq4zCAQWitKEzLSUxHmRFEKp3Y6T+PJaTN+CAQUuBzqCNlmhMzJzhH8Qi9XEhMCTTtA+0A/An6kvw7kG59+Gk7bzZlBzxIXovuowtq3CljHqsHlHTbRi05p8zf7rhtIpJFVZzuOa+119/cNVDDyC89KriG9q12dWwAOHl/VbW7e+Qosya7ILPZpl94ILg4EtjyjjRb61QszJx2HUgEfaCC9xqkxe6+176TDxS3ShWEENr7F0EkBO8D2jZ0CXxTDDdsufPfNXcHBJgjh/F3mKU12rsdWJnIQIDAQAB",
+  alipayPubKeyFile: "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAmImObitsqs+nFG0OrsIU/vo0A2EAWn6dclinjuuHHrXxN1uMTBe0PI8LNaD2NtwgYznzmdokFSUeWFDXqu15DR2l8/w3NCpIMxzSjALWxzFBi7I0ceHFumvrIMNh7f8yYBjnLOs8dIKi2chjN21AKu0p4B7ZpOdr15XyKtLd6ZDErpQmDb7qc+0Ceh7rio1nVeE6DqfyeSXFsTatnVlVZec07WUyrFHJ+3rYsYhjiydo4VZaj/9Ku1W+K0jE7apqN+etYr4zWHQFgm2XYu29UuSJEtFDV3vYpj+VWEmf23urr0uqGj5j4kzOjUAjsqfMkPsun9w8WLk37TgA5t5WjQIDAQAB",
   gatewayUrl: "https://openapi.alipay.com/gateway.do",
   notify_url: notify_url,
 }
