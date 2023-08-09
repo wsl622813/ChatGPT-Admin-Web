@@ -47,7 +47,7 @@ export const POST = serverErrorCatcher(
 
     //默认免费用户三分钟内2次, 付费用户三分钟内20次
     let limitNum = 6;
-    let duration = 10800;
+    let duration = 180;
 
     //使用resetChances字段作为plan, 0为普通用户, 1为付费用户
     const user = await UserDAL.getUser(userId);
